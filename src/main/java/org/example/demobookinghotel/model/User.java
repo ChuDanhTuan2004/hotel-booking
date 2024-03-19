@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -20,11 +21,8 @@ public class User {
     private String email;
     private String password;
     private String gender;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Collection<Role> roles = new HashSet<>();
+    @ManyToOne
+    private Role role;
 
 
 

@@ -1,6 +1,10 @@
 package org.example.demobookinghotel.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,12 +22,14 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roomId;
+    @NotBlank(message = "Vui long nhap kieu phong")
     private String roomType;
+    @Min(value = 0, message = "Vui long nhap gia lon hon 0")
+    @NotNull(message = "Vui long nhap gia phong")
     private BigDecimal roomPrice;
     private boolean isBooked = false;
     private String description;
-    @Lob
-    private Blob directionImage;
+    private String directionImage;
     @OneToMany(mappedBy="room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookedRoom> bookings;
     public Room(){
@@ -37,7 +43,6 @@ public class Room {
         booking.setRoom(this);
         isBooked = true;
         int bookingCode = (int) (Math.random() * 1000);
-        System.out.println(bookingCode);
         booking.setBookingConfirmationCode(bookingCode);
     }
 }

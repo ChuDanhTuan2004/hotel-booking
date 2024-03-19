@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit</title>
+    <style>
+        #room {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #room td, #room th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #room tr:nth-child(even){background-color: #f2f2f2;}
+
+        #room tr:hover {background-color: #ddd;}
+
+        #room th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        input[type=text],input[type=email]{
+            width: 100%;
+            padding: 12px 0;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 300px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        #form {
+            width: 500px;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        .notify span{font-size: 15px; color: blue;}
+    </style>
+</head>
+<body>
+<div id="form">
+    <form th:action="@{/admin/editRoom}" th:object="${room}"
+          method="POST" novalidate="novalidate" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{roomId}"/>
+        <div>
+            <label for="name">Type: </label>
+            <input type="text" id="name" th:field="*{roomType}"/>
+        </div>
+        <div>
+            <label for="price">Price: </label>
+            <input type="text" id="price" th:field="*{roomPrice}"/>
+        </div>
+        <div>
+            <label for="description">Description: </label>
+            <input type="text" id="description" th:field="*{description}"/>
+        </div>
+        <div>
+            <label for="photo">Photo</label>
+            <input id="photo" type="file" name="file"><br>
+        </div>
+        <input type="hidden" th:field="*{directionImage}"/>
+        <input type="submit" value="Edit"/>
+        <p style="color: red" th:each="e : ${listERR}" th:text="${e.getDefaultMessage()}">
+
+        </p>
+    </form>
+</div>
+</body>
+</html>
